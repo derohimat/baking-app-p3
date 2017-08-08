@@ -1,37 +1,23 @@
-# nanodegree-popular-movies-stage2
+# baking-app
 
-Udacity Nanodegree Popular Movies Stage 2. This app I made with MVP Architecture from [Android Base MVP](https://github.com/derohimat/android-base-mvp/)
+Udacity - Associate Android Developer Fast Track Track - Baking App. This app I made with MVP Architecture from [Android Base MVP](https://github.com/derohimat/android-base-mvp/)
 
 ## Udacity Review
-	### Meets Specifications
-	
-	You did a very good job! You could improve your app using some effects 
-	(such as Collapsing Toolbar Layout or Constraint Layout, fab button, expandible textview and so on...) 
-	to make it more gorgeous and you could implementing some extra features (sharing button...) 
-	but also considering the wealth of knowledge you have shown in the use of all those libraries 
-	I'd say you "Exceed Specifications".
+
 	
 # Feature
-   - Show Movies by Popular and High Rated
-   - Show Movies Description
-   - Watch Trailer
-   - Show Reviews
 
 # Screenshots
-<img src="https://github.com/derohimat/nanodegree-popular-movies-stage2/blob/master/home.png" width="300">
-<img src="https://github.com/derohimat/nanodegree-popular-movies-stage2/blob/master/home-sort.png" width="300">
-<img src="https://github.com/derohimat/nanodegree-popular-movies-stage2/blob/master/detail.png" width="300">
-<img src="https://github.com/derohimat/nanodegree-popular-movies-stage2/blob/master/detail-trailer-view.png" width="300">
 
 # Requirements :
-	Min SDK Version 15
-	Target SDK Version 24
+	Min SDK Version 16
+	Target SDK Version 25
 	Check the compileSdkVersion, and buildToolsVersion to be the latest
-	Build Tools Version 24.0.3
+	Build Tools Version 25.0.3
 	Java 1.8
 	
 # How to Use
-    Just change API_KEY from [MovieDB](https://www.themoviedb.org) in Constant.java 
+
     
 # Used Library from :
   - [Android Base MVP](https://derohimat.github.io/android-base-mvp/)
@@ -45,7 +31,7 @@ Udacity Nanodegree Popular Movies Stage 2. This app I made with MVP Architecture
   - [Realm](https://realm.io/)
 
 ### License
-    Copyright 2016 Deni Rohimat
+    Copyright 2017 Deni Rohimat
     
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

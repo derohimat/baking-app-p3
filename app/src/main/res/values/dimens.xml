@@ -1,0 +1,17 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="spacing_line">1dp</dimen>
+    <dimen name="spacing_half">4dp</dimen>
+    <dimen name="spacing_normal">8dp</dimen>
+    <dimen name="spacing_double">16dp</dimen>
+
+    <dimen name="size_img_poster">80dp</dimen>
+
+    <dimen name="app_bar_height">300dp</dimen>
+    <dimen name="video_height">75dp</dimen>
+    <dimen name="video_width">100dp</dimen>
+    <dimen name="video_max_height">80dp</dimen>
+</resources>
