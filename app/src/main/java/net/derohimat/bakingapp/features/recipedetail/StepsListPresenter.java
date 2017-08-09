@@ -12,34 +12,29 @@ import org.greenrobot.eventbus.EventBus;
 import javax.inject.Inject;
 
 import io.realm.Realm;
-import retrofit2.adapter.rxjava.HttpException;
 import rx.Subscription;
 
-public class RecipeDetailPresenter implements BasePresenter<RecipeDetailMvpView> {
-
-    private RecipeDetailMvpView mView;
-    private Subscription mSubscription;
-    private BaseApplication mBaseApplication;
-    private RecipeDao mData;
-//    private BaseListApiDao<ReviewDao> mReviews;
-//    private BaseListApiDao<VideoDao> mVideos;
+public class StepsListPresenter implements BasePresenter<StepsListMvpView> {
 
     @Inject
-    RecipeDetailPresenter(Context context) {
+    StepsListPresenter(Context context) {
         ((BaseApplication) context.getApplicationContext()).getApplicationComponent().inject(this);
     }
 
     @Inject
     ApiService mApiService;
     @Inject
-    Realm mRealm;
-    @Inject
     EventBus mEventBus;
+    @Inject
+    Realm mRealm;
+
+    private StepsListMvpView mView;
+    private Subscription mSubscription;
+    private RecipeDao mData;
 
     @Override
-    public void attachView(RecipeDetailMvpView view) {
+    public void attachView(StepsListMvpView view) {
         mView = view;
-        mBaseApplication = BaseApplication.get(mView.getContext());
     }
 
     @Override
@@ -48,14 +43,20 @@ public class RecipeDetailPresenter implements BasePresenter<RecipeDetailMvpView>
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 
-    void loadRecipe(long id) {
+    public void loadRecipe(long id) {
+
+        mView.showProgress();
+
         if (mSubscription != null) mSubscription.unsubscribe();
+
         mData = mRealm.where(RecipeDao.class).equalTo("id", id).findFirst();
 
         mView.showRecipe(mData);
+
+        mView.hideProgress();
     }
 
-    private static boolean isHttp404(Throwable error) {
-        return error instanceof HttpException && ((HttpException) error).code() == 404;
+    void closeRealm() {
+        mRealm.close();
     }
 }

@@ -1,6 +1,7 @@
-package net.derohimat.bakingapp.features.recipelist;
+package net.derohimat.bakingapp.features.recipedetail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -9,64 +10,69 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import net.derohimat.bakingapp.R;
 import net.derohimat.bakingapp.data.models.RecipeDao;
+import net.derohimat.bakingapp.data.models.StepsDao;
 import net.derohimat.bakingapp.features.AppBaseActivity;
-import net.derohimat.bakingapp.features.recipedetail.StepsDetailActivity;
 import net.derohimat.bakingapp.util.DialogFactory;
 import net.derohimat.baseapp.ui.view.BaseRecyclerView;
 
-import java.util.List;
-
 import butterknife.Bind;
 
-public class RecipeListActivity extends AppBaseActivity implements RecipeListMvpView {
+public class StepsDetailActivity extends AppBaseActivity implements StepsListMvpView {
+    public static final String EXTRA_RECIPE = "RECIPE_DATA";
+    public static final String EXTRA_RECIPE_ID = "RECIPE_ID";
 
     @Bind(R.id.recyclerview) BaseRecyclerView mRecyclerView;
     private ProgressBar mProgressBar = null;
-    private RecipeListPresenter mPresenter;
-    private RecipeListAdapter mAdapter;
-    private int mGridColumnCount;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getComponent().inject(this);
-    }
+    private StepsListPresenter mPresenter;
+    private StepsListAdapter mAdapter;
+    private RecipeDao mRecipeDao;
+    private long mRecipeId;
 
     @Override
     protected int getResourceLayout() {
-        return R.layout.recipe_list_activity;
+        return R.layout.recipe_detail_activity;
     }
 
     @Override
     protected void onViewReady(Bundle savedInstanceState) {
-        mGridColumnCount = getResources().getInteger(R.integer.grid_column_count);
-        getBaseActionBar().setElevation(0);
+        mRecipeDao = getIntent().getExtras().getParcelable(EXTRA_RECIPE);
+        assert mRecipeDao != null;
+        mRecipeId = mRecipeDao.getId();
 
-        setUpPresenter();
+        initToolbar();
         setUpAdapter();
         setUpRecyclerView();
+        setUpPresenter();
+    }
+
+    private void initToolbar() {
+        getBaseActionBar().setElevation(0);
+
+        getBaseActionBar().setDisplayHomeAsUpEnabled(true);
+        getBaseActionBar().setTitle(mRecipeDao.getName());
     }
 
     @Override
     public void setUpPresenter() {
-        mPresenter = new RecipeListPresenter(this);
+        mPresenter = new StepsListPresenter(this);
         mPresenter.attachView(this);
-        mPresenter.getRecipeList(false);
+        mPresenter.loadRecipe(mRecipeDao.getId());
     }
 
     @Override
     public void setUpAdapter() {
-        mAdapter = new RecipeListAdapter(mContext);
+        mAdapter = new StepsListAdapter(mContext);
         mAdapter.setOnItemClickListener((view, position) -> {
-            RecipeDao selectedItem = mAdapter.getDatas().get(position - 1);
+            StepsDao selectedItem = mAdapter.getDatas().get(position - 1);
 
-            startActivity(StepsDetailActivity.prepareIntent(getContext(), selectedItem));
+            getBaseFragmentManager().beginTransaction().replace(R.id.container_rellayout,
+                    RecipeDetailFragment.newInstance(mRecipeId, selectedItem.getId())).addToBackStack(null).commit();
         });
     }
 
     @Override
     public void setUpRecyclerView() {
-        mRecyclerView.setUpAsGrid(mGridColumnCount);
+        mRecyclerView.setUpAsList();
         mRecyclerView.setAdapter(mAdapter);
 
         mRecyclerView.setPullRefreshEnabled(true);
@@ -74,7 +80,7 @@ public class RecipeListActivity extends AppBaseActivity implements RecipeListMvp
         mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                mPresenter.getRecipeList(true);
+                mPresenter.loadRecipe(mRecipeDao.getId());
             }
 
             @Override
@@ -84,16 +90,9 @@ public class RecipeListActivity extends AppBaseActivity implements RecipeListMvp
     }
 
     @Override
-    protected void onDestroy() {
-        mPresenter.closeRealm();
-        mPresenter.detachView();
-        super.onDestroy();
-    }
-
-    @Override
-    public void showBakingList(List<RecipeDao> datas) {
+    public void showRecipe(RecipeDao data) {
         mAdapter.clear();
-        mAdapter.addAll(datas);
+        mAdapter.addAll(data.getSteps());
     }
 
     @Override
@@ -120,4 +119,11 @@ public class RecipeListActivity extends AppBaseActivity implements RecipeListMvp
     public Context getContext() {
         return this;
     }
+
+    public static Intent prepareIntent(Context context, RecipeDao recipeDao) {
+        Intent intent = new Intent(context, StepsDetailActivity.class);
+        intent.putExtra(EXTRA_RECIPE, recipeDao);
+        return intent;
+    }
+
 }

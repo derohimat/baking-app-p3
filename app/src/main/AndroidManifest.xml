@@ -21,7 +21,7 @@
         </activity>
 
         <activity
-            android:name=".features.recipedetail.RecipeDetailActivity"
+            android:name=".features.recipedetail.StepsDetailActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@style/AppTheme"/>
 

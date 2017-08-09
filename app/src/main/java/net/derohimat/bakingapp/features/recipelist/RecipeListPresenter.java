@@ -28,7 +28,7 @@ public class RecipeListPresenter implements BasePresenter<RecipeListMvpView> {
     }
 
     @Inject
-    ApiService mAPIService;
+    ApiService mApiService;
     @Inject
     EventBus mEventBus;
     @Inject
@@ -57,7 +57,7 @@ public class RecipeListPresenter implements BasePresenter<RecipeListMvpView> {
         if (mSubscription != null) mSubscription.unsubscribe();
 
         if (refresh) {
-            mSubscription = mAPIService.bakingList()
+            mSubscription = mApiService.bakingList()
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(mBaseApplication.getSubscribeScheduler())
                     .subscribe(new Subscriber<List<RecipeDao>>() {
@@ -86,12 +86,12 @@ public class RecipeListPresenter implements BasePresenter<RecipeListMvpView> {
     }
 
     private void getFromLocal() {
-        final RealmResults<RecipeDao> movieDaos = mRealm.where(RecipeDao.class).findAll();
+        final RealmResults<RecipeDao> recipeDaos = mRealm.where(RecipeDao.class).findAll();
 
-        if (movieDaos.isEmpty()) {
+        if (recipeDaos.isEmpty()) {
             getRecipeList(true);
         } else {
-            mView.showBakingList(movieDaos);
+            mView.showBakingList(recipeDaos);
         }
     }
 
