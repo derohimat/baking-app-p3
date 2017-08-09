@@ -8,10 +8,6 @@
     <string name="error_loading_movie">error loading movie</string>
     <string name="action_refresh">Refresh</string>
     <string name="generic_error_title">Ops! An error occurred.</string>
-    <string name="title">Title</string>
-    <string name="dummy_rate">x.x/10</string>
-    <string name="add_to_favorite">Add To Favorite</string>
-    <string name="dummy_release_date">Release date - xxx minutes</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet.</string>
 
 </resources>

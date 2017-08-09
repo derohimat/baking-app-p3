@@ -5,10 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/spacing_half"
     android:foreground="?selectableItemBackground"
-    app:cardCornerRadius="@dimen/spacing_half"
-    app:cardElevation="@dimen/spacing_line"
-    app:cardUseCompatPadding="true">
+    app:cardElevation="@dimen/spacing_tiny">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,8 +16,8 @@
 
         <net.derohimat.baseapp.ui.view.BaseImageView
             android:id="@+id/iv_thumbnail"
-            android:layout_width="@dimen/video_width"
-            android:layout_height="@dimen/video_height"
+            android:layout_width="@dimen/size_img_poster"
+            android:layout_height="@dimen/size_img_poster"
             android:adjustViewBounds="true"
             android:maxHeight="@dimen/video_max_height"
             android:scaleType="fitCenter"
@@ -62,6 +61,18 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/spacing_normal"
                     android:drawableLeft="@drawable/ic_steps"
+                    android:drawablePadding="@dimen/spacing_normal"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    tools:text="3"/>
+
+                <TextView
+                    android:id="@+id/tv_servings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/spacing_normal"
+                    android:drawableLeft="@drawable/ic_servings"
                     android:drawablePadding="@dimen/spacing_normal"
                     android:fontFamily="sans-serif-light"
                     android:gravity="center"

@@ -1,8 +1,8 @@
 package net.derohimat.bakingapp.di.module;
 
 import net.derohimat.bakingapp.BaseApplication;
-import net.derohimat.bakingapp.data.local.PreferencesHelper;
-import net.derohimat.bakingapp.data.remote.ApiService;
+import net.derohimat.bakingapp.data.sources.local.PreferencesHelper;
+import net.derohimat.bakingapp.data.sources.remote.ApiService;
 
 import org.greenrobot.eventbus.EventBus;
 

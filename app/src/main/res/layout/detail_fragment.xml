@@ -12,13 +12,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <net.derohimat.baseapp.ui.view.BaseImageView
-            android:id="@+id/iv_backdrop"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/app_bar_height"
-            android:fitsSystemWindows="true"
-            android:scaleType="centerCrop"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,47 +36,61 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/spacing_double"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/spacing_normal"
+                    android:layout_marginRight="@dimen/spacing_normal"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tv_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        tools:text="@string/title"/>
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
+                        tools:text="@string/lorem_ipsum"/>
 
-                    <TextView
-                        android:id="@+id/tv_releasedate"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                        tools:text="@string/dummy_release_date"/>
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_voteavg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                        tools:text="@string/dummy_rate"/>
+                        <TextView
+                            android:id="@+id/tv_ingredients"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/spacing_normal"
+                            android:drawableLeft="@drawable/ic_ingredients"
+                            android:drawablePadding="@dimen/spacing_normal"
+                            android:fontFamily="sans-serif-light"
+                            android:gravity="center"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                            tools:text="3"/>
 
-                    <TextView
-                        android:id="@+id/tv_favorite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        tools:text="@string/add_to_favorite"/>
+                        <TextView
+                            android:id="@+id/tv_steps"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/spacing_normal"
+                            android:drawableLeft="@drawable/ic_steps"
+                            android:drawablePadding="@dimen/spacing_normal"
+                            android:fontFamily="sans-serif-light"
+                            android:gravity="center"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                            tools:text="3"/>
 
+                        <TextView
+                            android:id="@+id/tv_servings"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/spacing_normal"
+                            android:drawableLeft="@drawable/ic_servings"
+                            android:drawablePadding="@dimen/spacing_normal"
+                            android:fontFamily="sans-serif-light"
+                            android:gravity="center"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                            tools:text="3"/>
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/tv_synopsis"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_double"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                tools:text="@string/lorem_ipsum"/>
 
             <View
                 android:layout_width="match_parent"

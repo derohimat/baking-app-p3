@@ -1,12 +1,12 @@
 package net.derohimat.bakingapp.di.component;
 
 import net.derohimat.bakingapp.BaseApplication;
-import net.derohimat.bakingapp.data.local.PreferencesHelper;
-import net.derohimat.bakingapp.data.remote.ApiService;
-import net.derohimat.bakingapp.data.remote.UnauthorisedInterceptor;
+import net.derohimat.bakingapp.data.sources.local.PreferencesHelper;
+import net.derohimat.bakingapp.data.sources.remote.ApiService;
+import net.derohimat.bakingapp.data.sources.remote.UnauthorisedInterceptor;
 import net.derohimat.bakingapp.di.module.ApplicationModule;
-import net.derohimat.bakingapp.view.fragment.detail.DetailPresenter;
-import net.derohimat.bakingapp.view.activity.main.MainPresenter;
+import net.derohimat.bakingapp.features.recipedetail.RecipeDetailPresenter;
+import net.derohimat.bakingapp.features.recipelist.RecipeListPresenter;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -19,8 +19,8 @@ import io.realm.Realm;
 @Component(modules = {ApplicationModule.class})
 public interface ApplicationComponent {
 
-    void inject(MainPresenter mainPresenter);
-    void inject(DetailPresenter detailPresenter);
+    void inject(RecipeListPresenter recipeListPresenter);
+    void inject(RecipeDetailPresenter recipeDetailPresenter);
     void inject(BaseApplication baseApplication);
     void inject(UnauthorisedInterceptor unauthorisedInterceptor);
 
