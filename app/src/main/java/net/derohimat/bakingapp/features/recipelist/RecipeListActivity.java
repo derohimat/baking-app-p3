@@ -42,9 +42,9 @@ public class RecipeListActivity extends AppBaseActivity implements RecipeListMvp
         mGridColumnCount = getResources().getInteger(R.integer.grid_column_count);
         getBaseActionBar().setElevation(0);
 
-        setUpPresenter();
         setUpAdapter();
         setUpRecyclerView();
+        setUpPresenter();
     }
 
     @Override
@@ -85,7 +85,6 @@ public class RecipeListActivity extends AppBaseActivity implements RecipeListMvp
 
     @Override
     protected void onDestroy() {
-        mPresenter.closeRealm();
         mPresenter.detachView();
         super.onDestroy();
     }

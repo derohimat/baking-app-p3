@@ -77,12 +77,12 @@ public class RecipeListPresenter implements BasePresenter<RecipeListMvpView> {
                         public void onNext(List<RecipeDao> response) {
                             mBakingList = response;
                             saveToLocal();
-                            mView.hideProgress();
                         }
                     });
         } else {
             getFromLocal();
         }
+        mView.hideProgress();
     }
 
     private void getFromLocal() {

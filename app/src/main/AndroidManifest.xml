@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".features.recipelist.RecipeListActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -22,7 +22,7 @@
 
         <activity
             android:name=".features.recipedetail.StepsDetailActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@style/AppTheme"/>
 
     </application>
