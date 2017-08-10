@@ -97,4 +97,7 @@ dependencies {
 
     //----- Easy Permission Management
     compile "com.karumi:dexter:4.1.1"
+
+    //----- Exo Player
+    compile 'com.google.android.exoplayer:exoplayer:r2.4.3'
 }
