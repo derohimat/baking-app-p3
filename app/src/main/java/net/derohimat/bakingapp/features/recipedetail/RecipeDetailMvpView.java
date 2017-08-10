@@ -14,8 +14,4 @@ interface RecipeDetailMvpView extends MvpView {
     void hideProgress();
 
     void showRecipe(RecipeDao data);
-
-    void showSteps(List<StepsDao> data);
-
-    void showIngredients(List<IngredientsDao> data);
 }
