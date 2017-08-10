@@ -6,23 +6,12 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 
 public class IngredientsDao extends RealmObject implements Parcelable {
 
-    @PrimaryKey
-    @SerializedName("id") private long id;
     @SerializedName("quantity") private double quantity;
     @SerializedName("measure") private String measure;
     @SerializedName("ingredient") private String ingredient;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public double getQuantity() {
         return quantity;
@@ -55,7 +44,6 @@ public class IngredientsDao extends RealmObject implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.id);
         dest.writeDouble(this.quantity);
         dest.writeString(this.measure);
         dest.writeString(this.ingredient);
@@ -65,7 +53,6 @@ public class IngredientsDao extends RealmObject implements Parcelable {
     }
 
     protected IngredientsDao(Parcel in) {
-        this.id = in.readLong();
         this.quantity = in.readDouble();
         this.measure = in.readString();
         this.ingredient = in.readString();

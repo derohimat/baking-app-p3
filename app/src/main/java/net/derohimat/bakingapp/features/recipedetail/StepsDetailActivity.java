@@ -4,24 +4,32 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import net.derohimat.bakingapp.R;
+import net.derohimat.bakingapp.data.models.IngredientsDao;
 import net.derohimat.bakingapp.data.models.RecipeDao;
 import net.derohimat.bakingapp.data.models.StepsDao;
 import net.derohimat.bakingapp.features.AppBaseActivity;
 import net.derohimat.bakingapp.util.DialogFactory;
 import net.derohimat.baseapp.ui.view.BaseRecyclerView;
 
+import java.text.DecimalFormat;
+
 import butterknife.Bind;
 
 public class StepsDetailActivity extends AppBaseActivity implements StepsListMvpView {
     public static final String EXTRA_RECIPE = "RECIPE_DATA";
-    public static final String EXTRA_RECIPE_ID = "RECIPE_ID";
+    public static final String SPACE = " ";
+    public static final String NEW_LINE = "\n";
+    public static final String DASH = "-";
 
     @Bind(R.id.recyclerview) BaseRecyclerView mRecyclerView;
+    private TextView mTvIngredients;
     private ProgressBar mProgressBar = null;
     private StepsListPresenter mPresenter;
     private StepsListAdapter mAdapter;
@@ -72,6 +80,11 @@ public class StepsDetailActivity extends AppBaseActivity implements StepsListMvp
 
     @Override
     public void setUpRecyclerView() {
+        View headerView = View.inflate(getContext(), R.layout.header_ingredients, null);
+        headerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        mTvIngredients = (TextView) headerView.findViewById(R.id.tv_title);
+
+        mRecyclerView.addHeaderView(headerView);
         mRecyclerView.setUpAsList();
         mRecyclerView.setAdapter(mAdapter);
 
@@ -93,6 +106,25 @@ public class StepsDetailActivity extends AppBaseActivity implements StepsListMvp
     public void showRecipe(RecipeDao data) {
         mAdapter.clear();
         mAdapter.addAll(data.getSteps());
+
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < data.getIngredients().size(); i++) {
+            IngredientsDao item = data.getIngredients().get(i);
+
+            DecimalFormat format = new DecimalFormat();
+            format.setDecimalSeparatorAlwaysShown(false);
+
+            builder.append(DASH)
+                    .append(SPACE)
+                    .append(format.format(item.getQuantity()))
+                    .append(SPACE)
+                    .append(item.getMeasure())
+                    .append(SPACE)
+                    .append(item.getIngredient())
+                    .append(NEW_LINE);
+        }
+        mTvIngredients.setText(builder.toString());
     }
 
     @Override

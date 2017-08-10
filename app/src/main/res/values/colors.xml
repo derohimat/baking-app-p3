@@ -9,20 +9,17 @@
     <color name="app_text_label">#656565</color>
     <color name="app_base">#0099e5</color>
 
-    <color name="appcolor_blue">#71E2EF</color>
-    <color name="appcolor_blue_dark">#38C6D9</color>
-    <color name="appcolor_light_grey">#000000</color>
+    <color name="colorPrimary">#71E2EF</color>
+    <color name="colorPrimaryDark">#38C6D9</color>
+    <color name="colorAccent">#ff4444</color>
 
-    <!--<color name="colorPrimary">@color/app_base</color>-->
-    <!--<color name="colorPrimaryDark">@color/app_window_bglight_color</color>-->
+    <!--<color name="colorPrimary">@color/appcolor_blue</color>-->
+    <!--<color name="colorPrimaryDark">@color/appcolor_blue_dark</color>-->
     <!--<color name="colorAccent">@color/app_window_bglight_color</color>-->
-    <!--<color name="colorAccentLighter">@color/appcolor_green</color>-->
-
 
     <color name="material_red">#ff4444</color>
 
     <color name="white">#ffffffff</color>
-    3
     <color name="LightGrey">#ffd3d3d3</color>
     <color name="Gray">#ff808080</color>
 
