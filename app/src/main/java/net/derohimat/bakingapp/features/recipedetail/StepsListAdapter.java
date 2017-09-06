@@ -55,7 +55,7 @@ class StepsListAdapter extends BaseRecyclerAdapter<StepsDao, StepsListAdapter.St
 
         @Override
         public void bind(StepsDao item) {
-            mTxtTitle.setText(item.getId() + " " + item.getShortDescription());
+            mTxtTitle.setText(item.getShortDescription());
             if (item.getVideoURL().equals("")) {
                 mImgPlay.setVisibility(View.GONE);
             } else {

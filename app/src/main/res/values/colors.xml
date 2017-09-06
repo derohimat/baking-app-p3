@@ -22,5 +22,6 @@
 
     <color name="white">#ffffffff</color>
     <color name="Gray">#ff808080</color>
+    <color name="GrayLight">#EFEFEF</color>
 
 </resources>

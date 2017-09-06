@@ -15,5 +15,6 @@
     <xliff:g id="bullet">\u2022</xliff:g> <xliff:g id="name">%s</xliff:g>
     (<xliff:g id="quantity">%s</xliff:g> <xliff:g id="measure">%s</xliff:g>)
   </string>
+    <string name="introduction">Introduction</string>
 
 </resources>

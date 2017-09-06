@@ -9,6 +9,8 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -36,6 +38,7 @@ import net.derohimat.bakingapp.util.DialogFactory;
 import net.derohimat.baseapp.ui.fragment.BaseFragment;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 public class RecipeDetailFragment extends BaseFragment implements RecipeDetailMvpView, ExoPlayer.EventListener {
 
@@ -45,6 +48,10 @@ public class RecipeDetailFragment extends BaseFragment implements RecipeDetailMv
     @Bind(R.id.tv_title) TextView mTxtTitle;
     @Bind(R.id.player_view) SimpleExoPlayerView mSimpleExoPlayerView;
     @Bind(R.id.description_card) CardView descriptionCard;
+    @Bind(R.id.iv_prev) ImageButton ivPrev;
+    @Bind(R.id.tv_steps) TextView tvSteps;
+    @Bind(R.id.iv_next) ImageButton ivNext;
+    @Bind(R.id.view_bottom) LinearLayout viewBottom;
 
     private SimpleExoPlayer mSimpleExoPlayer;
     private MediaSessionCompat mMediaSession;
@@ -79,13 +86,6 @@ public class RecipeDetailFragment extends BaseFragment implements RecipeDetailMv
         isTwoPane = getResources().getBoolean(R.bool.two_pane_mode);
 
         setUpPresenter();
-
-        int orientation = getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE && !isTwoPane) {
-            expandVideoView(mSimpleExoPlayerView);
-            descriptionCard.setVisibility(View.GONE);
-            hideSystemUI();
-        }
     }
 
     @Override
@@ -118,10 +118,26 @@ public class RecipeDetailFragment extends BaseFragment implements RecipeDetailMv
     public void showRecipe(RecipeDao data) {
         mRecipeDao = data;
 
+        if (mStepsId > 0) {
+            tvSteps.setText(mStepsId + "/" + (mRecipeDao.getSteps().size() - 1));
+        } else {
+            tvSteps.setText(R.string.introduction);
+        }
         initializeMediaSession();
 
         for (StepsDao stepsDao : mRecipeDao.getSteps()) {
             if (stepsDao.getId() == mStepsId) {
+
+                int orientation = getResources().getConfiguration().orientation;
+                if (orientation == Configuration.ORIENTATION_LANDSCAPE && !isTwoPane && !stepsDao.getVideoURL().equals("")) {
+                    expandVideoView(mSimpleExoPlayerView);
+                    descriptionCard.setVisibility(View.GONE);
+                    viewBottom.setVisibility(View.GONE);
+                    hideSystemUI();
+                } else {
+                    descriptionCard.setVisibility(View.VISIBLE);
+                }
+
                 if (stepsDao.getVideoURL().equals("")) {
                     mSimpleExoPlayerView.setVisibility(View.GONE);
                 } else {
@@ -250,5 +266,34 @@ public class RecipeDetailFragment extends BaseFragment implements RecipeDetailMv
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE);
+    }
+
+    @OnClick({R.id.iv_prev, R.id.iv_next})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_prev:
+                if (mStepsId == 0) {
+                    ivPrev.setClickable(false);
+                } else {
+                    ivNext.setClickable(true);
+                    mStepsId--;
+                    changeSteps();
+                }
+                break;
+            case R.id.iv_next:
+                if (mStepsId == mRecipeDao.getSteps().size() - 1) {
+                    ivNext.setClickable(false);
+                } else {
+                    ivPrev.setClickable(true);
+                    mStepsId++;
+                    changeSteps();
+                }
+                break;
+        }
+    }
+
+    private void changeSteps() {
+        releasePlayer();
+        showRecipe(mRecipeDao);
     }
 }
