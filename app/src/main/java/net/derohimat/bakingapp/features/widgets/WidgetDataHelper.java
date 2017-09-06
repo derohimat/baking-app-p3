@@ -14,7 +14,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -38,14 +37,9 @@ public class WidgetDataHelper {
 
     List<RecipeDao> getRecipe() {
         if (mPreferenceHelper.isRecipeListSynced()) {
-            final RealmResults<RecipeDao> recipeDaos = mRealm.where(RecipeDao.class).findAll();
-            if (recipeDaos.isEmpty()) {
-                return new ArrayList<>();
-            } else {
-                return recipeDaos;
-            }
+            return getRecipeFromLocal();
         } else {
-            return getRecipeList();
+            return getRecipeFromApi();
         }
     }
 
@@ -70,8 +64,11 @@ public class WidgetDataHelper {
         }
     }
 
+    private List<RecipeDao> getRecipeFromLocal() {
+        return mRealm.where(RecipeDao.class).findAll();
+    }
 
-    List<RecipeDao> getRecipeList() {
+    private List<RecipeDao> getRecipeFromApi() {
         if (mSubscription != null) mSubscription.unsubscribe();
 
         mSubscription = mApiService.bakingList()
@@ -81,6 +78,7 @@ public class WidgetDataHelper {
                     @Override
                     public void onCompleted() {
                         Timber.i("Recipe loaded " + mBakingList);
+                        saveToLocal();
                     }
 
                     @Override
@@ -96,4 +94,11 @@ public class WidgetDataHelper {
         return mBakingList;
     }
 
+    private void saveToLocal() {
+        if (!mRealm.isInTransaction()) {
+            mRealm.beginTransaction();
+        }
+
+        mRealm.copyToRealmOrUpdate(mBakingList);
+    }
 }

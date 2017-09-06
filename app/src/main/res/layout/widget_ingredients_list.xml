@@ -11,7 +11,9 @@
         android:id="@+id/widget_recipe_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
+        android:padding="@dimen/spacing_half"
+        android:textColor="@color/app_text_label"
+        android:textSize="@dimen/text_widget_title"
         android:textStyle="bold"
         tools:text="Nutella Pie"/>
 

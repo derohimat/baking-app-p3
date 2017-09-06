@@ -9,17 +9,15 @@
         android:id="@+id/widget_config_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/widget_config"/>
+        android:layout_margin="@dimen/spacing_normal"
+        android:text="@string/widget_config"
+        android:textSize="@dimen/text_widget_title"/>
 
     <RadioGroup
         android:id="@+id/widget_config_radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_margin="@dimen/spacing_normal"
         android:orientation="vertical"/>
 
     <Button
@@ -27,8 +25,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_margin="@dimen/spacing_normal"
         android:text="@string/widget_config_ok"/>
 </LinearLayout>
