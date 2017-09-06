@@ -19,9 +19,10 @@
         tools:visibility="visible"/>
 
     <android.support.v7.widget.CardView
+        android:id="@+id/description_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:foreground="?selectableItemBackground"
+        android:layout_marginTop="@dimen/spacing_half"
         app:cardBackgroundColor="@color/colorPrimary"
         app:cardElevation="@dimen/spacing_tiny">
 

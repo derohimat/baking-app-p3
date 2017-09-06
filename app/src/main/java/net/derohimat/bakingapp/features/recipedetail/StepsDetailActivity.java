@@ -73,6 +73,9 @@ public class StepsDetailActivity extends AppBaseActivity implements StepsListMvp
         mAdapter.setOnItemClickListener((view, position) -> {
             StepsDao selectedItem = mAdapter.getDatas().get(position - 2);
 
+            mAdapter.setSelectedPosition(position - 2);
+            mAdapter.notifyDataSetChanged();
+
             getBaseFragmentManager().beginTransaction().replace(R.id.container_rellayout,
                     RecipeDetailFragment.newInstance(mRecipeId, selectedItem.getId())).addToBackStack(null).commit();
         });

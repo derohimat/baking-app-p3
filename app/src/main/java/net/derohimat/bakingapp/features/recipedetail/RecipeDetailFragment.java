@@ -1,13 +1,12 @@
 package net.derohimat.bakingapp.features.recipedetail;
 
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -45,6 +44,7 @@ public class RecipeDetailFragment extends BaseFragment implements RecipeDetailMv
 
     @Bind(R.id.tv_title) TextView mTxtTitle;
     @Bind(R.id.player_view) SimpleExoPlayerView mSimpleExoPlayerView;
+    @Bind(R.id.description_card) CardView descriptionCard;
 
     private SimpleExoPlayer mSimpleExoPlayer;
     private MediaSessionCompat mMediaSession;
@@ -55,6 +55,7 @@ public class RecipeDetailFragment extends BaseFragment implements RecipeDetailMv
     private RecipeDao mRecipeDao;
     private long mRecipeId;
     private long mStepsId;
+    boolean isTwoPane;
 
     public static RecipeDetailFragment newInstance(long id, long stepsId) {
         RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
@@ -75,33 +76,22 @@ public class RecipeDetailFragment extends BaseFragment implements RecipeDetailMv
         mRecipeId = getArguments().getLong(ARG_RECIPE_ID);
         mStepsId = getArguments().getLong(ARG_STEPS_ID);
 
+        isTwoPane = getResources().getBoolean(R.bool.two_pane_mode);
+
         setUpPresenter();
 
-        setHasOptionsMenu(true);
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE && !isTwoPane) {
+            expandVideoView(mSimpleExoPlayerView);
+            descriptionCard.setVisibility(View.GONE);
+            hideSystemUI();
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
         releasePlayer();
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        menu.clear();
-        inflater.inflate(R.menu.menu_fragment_details, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_detail_refresh:
-                mPresenter.loadRecipe(mRecipeDao.getId());
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     private void setUpPresenter() {
@@ -250,5 +240,15 @@ public class RecipeDetailFragment extends BaseFragment implements RecipeDetailMv
     @Override
     public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
 
+    }
+
+    private void hideSystemUI() {
+        getActivity().getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE);
     }
 }
