@@ -9,15 +9,15 @@ import io.realm.RealmObject;
 
 public class IngredientsDao extends RealmObject implements Parcelable {
 
-    @SerializedName("quantity") private double quantity;
+    @SerializedName("quantity") private float quantity;
     @SerializedName("measure") private String measure;
     @SerializedName("ingredient") private String ingredient;
 
-    public double getQuantity() {
+    public float getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(double quantity) {
+    public void setQuantity(float quantity) {
         this.quantity = quantity;
     }
 
@@ -44,7 +44,7 @@ public class IngredientsDao extends RealmObject implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeDouble(this.quantity);
+        dest.writeFloat(this.quantity);
         dest.writeString(this.measure);
         dest.writeString(this.ingredient);
     }
@@ -53,7 +53,7 @@ public class IngredientsDao extends RealmObject implements Parcelable {
     }
 
     protected IngredientsDao(Parcel in) {
-        this.quantity = in.readDouble();
+        this.quantity = in.readFloat();
         this.measure = in.readString();
         this.ingredient = in.readString();
     }

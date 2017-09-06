@@ -3,6 +3,7 @@ package net.derohimat.bakingapp.di.component;
 import net.derohimat.bakingapp.di.ActivityScope;
 import net.derohimat.bakingapp.features.recipedetail.StepsDetailActivity;
 import net.derohimat.bakingapp.features.recipelist.RecipeListActivity;
+import net.derohimat.bakingapp.features.widgets.WidgetConfigurationActivity;
 
 import dagger.Component;
 
@@ -12,4 +13,6 @@ public interface ActivityComponent extends ApplicationComponent {
 
     void inject(RecipeListActivity activity);
     void inject(StepsDetailActivity activity);
+
+    void inject(WidgetConfigurationActivity activity);
 }

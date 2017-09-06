@@ -1,6 +1,7 @@
 package net.derohimat.bakingapp.di.module;
 
-import net.derohimat.bakingapp.BaseApplication;
+import android.content.Context;
+
 import net.derohimat.bakingapp.data.sources.local.PreferencesHelper;
 import net.derohimat.bakingapp.data.sources.remote.ApiService;
 
@@ -15,22 +16,16 @@ import io.realm.Realm;
 @Module
 public class ApplicationModule {
 
-    private final BaseApplication mBaseApplication;
+    private final Context context;
 
-    public ApplicationModule(BaseApplication baseApplication) {
-        this.mBaseApplication = baseApplication;
-    }
-
-    @Provides
-    @Singleton
-    public BaseApplication provideApplication() {
-        return mBaseApplication;
+    public ApplicationModule(Context context) {
+        this.context = context;
     }
 
     @Provides
     @Singleton
     public ApiService provideApiService() {
-        return ApiService.Factory.create(mBaseApplication);
+        return ApiService.Factory.create(context);
     }
 
     @Provides
@@ -48,7 +43,13 @@ public class ApplicationModule {
     @Provides
     @Singleton
     public PreferencesHelper prefsHelper() {
-        return new PreferencesHelper(mBaseApplication);
+        return new PreferencesHelper(context);
+    }
+
+    @Provides
+    @Singleton
+    Context provideContext() {
+        return context;
     }
 
 }

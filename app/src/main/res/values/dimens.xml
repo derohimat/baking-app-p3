@@ -10,4 +10,11 @@
 
     <dimen name="video_max_height">80dp</dimen>
     <dimen name="default_video_height">200dp</dimen>
+
+    <!--Widget-->
+    <dimen name="widget_default_height">180dp</dimen>
+    <dimen name="widget_default_width">250dp</dimen>
+    <dimen name="widget_default_resize_width">180dp</dimen>
+    <dimen name="widget_default_resize_height">110dp</dimen>
+    <dimen name="widget_padding">4dp</dimen>
 </resources>

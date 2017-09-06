@@ -25,6 +25,22 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@style/AppTheme"/>
 
+        <receiver android:name=".features.widgets.WidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/ingredients_widget_info"/>
+        </receiver>
+
+        <activity android:name=".features.widgets.WidgetConfigurationActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

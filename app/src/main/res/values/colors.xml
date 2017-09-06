@@ -11,6 +11,7 @@
 
     <color name="colorPrimary">#71E2EF</color>
     <color name="colorPrimaryDark">#38C6D9</color>
+    <color name="colorPrimaryLight">#98eff9</color>
     <color name="colorAccent">#ff4444</color>
 
     <!--<color name="colorPrimary">@color/appcolor_blue</color>-->
