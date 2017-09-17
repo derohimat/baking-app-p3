@@ -4,7 +4,6 @@
     <string name="dialog_action_ok">OK</string>
 
     <string name="dialog_general_error_message">General Error</string>
-    <string name="action_refresh">Refresh</string>
     <string name="generic_error_title">Ops! An error occurred.</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet.</string>
     <string name="ingredients">Ingredients</string>

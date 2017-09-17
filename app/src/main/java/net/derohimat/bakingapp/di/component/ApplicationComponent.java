@@ -8,8 +8,8 @@ import net.derohimat.bakingapp.data.sources.remote.ApiService;
 import net.derohimat.bakingapp.data.sources.remote.UnauthorisedInterceptor;
 import net.derohimat.bakingapp.di.module.ApplicationModule;
 import net.derohimat.bakingapp.features.recipedetail.RecipeDetailPresenter;
-import net.derohimat.bakingapp.features.steps.StepsListPresenter;
 import net.derohimat.bakingapp.features.recipelist.RecipeListPresenter;
+import net.derohimat.bakingapp.features.steps.StepsListPresenter;
 import net.derohimat.bakingapp.features.widgets.WidgetDataHelper;
 import net.derohimat.bakingapp.features.widgets.WidgetProvider;
 
