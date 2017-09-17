@@ -4,19 +4,18 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
 
-        <item name="colorPrimary">@color/appcolor_blue</item>
-        <item name="colorPrimaryDark">@color/appcolor_blue_dark</item>
-        <item name="colorAccent">@color/app_window_bglight_color</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/app_window_bglight_color</item>
 
-        <item name="colorControlActivated">@color/app_base</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
         <item name="colorControlNormal">@color/app_text_unimportant</item>
-        <item name="colorControlHighlight">@color/app_base</item>
+        <item name="colorControlHighlight">@color/colorPrimary</item>
 
         <item name="android:textColor">@color/app_text_label</item>
 
         <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
-        <item name="android:navigationBarColor">@color/appcolor_light_grey</item>
     </style>
 
     <style name="MaterialAnimations.TextAppearance.Title" parent="android:TextAppearance.Material.Title">

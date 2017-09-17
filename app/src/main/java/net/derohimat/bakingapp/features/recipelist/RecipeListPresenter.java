@@ -4,6 +4,7 @@ import android.content.Context;
 
 import net.derohimat.bakingapp.BaseApplication;
 import net.derohimat.bakingapp.data.models.RecipeDao;
+import net.derohimat.bakingapp.data.sources.local.PreferencesHelper;
 import net.derohimat.bakingapp.data.sources.remote.ApiService;
 import net.derohimat.baseapp.presenter.BasePresenter;
 
@@ -27,12 +28,10 @@ public class RecipeListPresenter implements BasePresenter<RecipeListMvpView> {
         ((BaseApplication) context.getApplicationContext()).getApplicationComponent().inject(this);
     }
 
-    @Inject
-    ApiService mAPIService;
-    @Inject
-    EventBus mEventBus;
-    @Inject
-    Realm mRealm;
+    @Inject ApiService mApiService;
+    @Inject EventBus mEventBus;
+    @Inject PreferencesHelper mPreferencesHelper;
+    @Inject Realm mRealm;
 
     private RecipeListMvpView mView;
     private Subscription mSubscription;
@@ -57,7 +56,7 @@ public class RecipeListPresenter implements BasePresenter<RecipeListMvpView> {
         if (mSubscription != null) mSubscription.unsubscribe();
 
         if (refresh) {
-            mSubscription = mAPIService.bakingList()
+            mSubscription = mApiService.bakingList()
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(mBaseApplication.getSubscribeScheduler())
                     .subscribe(new Subscriber<List<RecipeDao>>() {
@@ -65,33 +64,33 @@ public class RecipeListPresenter implements BasePresenter<RecipeListMvpView> {
                         public void onCompleted() {
                             Timber.i("Recipe loaded " + mBakingList);
                             mView.showBakingList(mBakingList);
+                            saveToLocal();
                         }
 
                         @Override
                         public void onError(Throwable error) {
-                            Timber.e("Error loading Movies", error);
+                            Timber.e("Error loading Recipe", error);
                             mView.showError(error);
                         }
 
                         @Override
                         public void onNext(List<RecipeDao> response) {
                             mBakingList = response;
-                            saveToLocal();
-                            mView.hideProgress();
                         }
                     });
         } else {
             getFromLocal();
         }
+        mView.hideProgress();
     }
 
     private void getFromLocal() {
-        final RealmResults<RecipeDao> movieDaos = mRealm.where(RecipeDao.class).findAll();
+        final RealmResults<RecipeDao> recipeDaos = mRealm.where(RecipeDao.class).findAll();
 
-        if (movieDaos.isEmpty()) {
+        if (recipeDaos.isEmpty()) {
             getRecipeList(true);
         } else {
-            mView.showBakingList(movieDaos);
+            mView.showBakingList(recipeDaos);
         }
     }
 
@@ -101,6 +100,7 @@ public class RecipeListPresenter implements BasePresenter<RecipeListMvpView> {
         }
 
         mRealm.copyToRealmOrUpdate(mBakingList);
+        mPreferencesHelper.setRecipeListSynced(true);
     }
 
 

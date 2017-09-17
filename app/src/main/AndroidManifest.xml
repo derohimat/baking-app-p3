@@ -12,7 +12,6 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".features.recipelist.RecipeListActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -21,9 +20,24 @@
         </activity>
 
         <activity
-            android:name=".features.recipedetail.RecipeDetailActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:name=".features.recipedetail.StepsDetailActivity"
             android:theme="@style/AppTheme"/>
+
+        <receiver android:name=".features.widgets.WidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/ingredients_widget_info"/>
+        </receiver>
+
+        <activity android:name=".features.widgets.WidgetConfigurationActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
 
     </application>
 
