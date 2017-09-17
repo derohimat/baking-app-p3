@@ -14,18 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
-import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
@@ -40,10 +34,13 @@ import net.derohimat.baseapp.ui.fragment.BaseFragment;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class RecipeDetailFragment extends BaseFragment implements RecipeDetailMvpView, ExoPlayer.EventListener {
+public class RecipeDetailFragment extends BaseFragment implements RecipeDetailMvpView {
 
     public static final String ARG_RECIPE_ID = "ARG_RECIPE_ID";
     public static final String ARG_STEPS_ID = "ARG_STEPS_ID";
+    private static final String EXTRA_CURRENT_WINDOW = "EXTRA_CURRENT_WINDOW";
+    private static final String EXTRA_PLAY_WHEN_READY = "EXTRA_PLAY_WHEN_READY";
+    private static final String EXTRA_PLAYBACK_POSITION = "EXTRA_PLAYBACK_POSITION";
 
     @Bind(R.id.tv_title) TextView mTxtTitle;
     @Bind(R.id.player_view) SimpleExoPlayerView mSimpleExoPlayerView;
@@ -55,7 +52,6 @@ public class RecipeDetailFragment extends BaseFragment implements RecipeDetailMv
 
     private SimpleExoPlayer mSimpleExoPlayer;
     private MediaSessionCompat mMediaSession;
-    private PlaybackStateCompat.Builder mStateBuilder;
 
     private RecipeDetailPresenter mPresenter;
     private ProgressBar mProgressBar = null;
@@ -63,6 +59,9 @@ public class RecipeDetailFragment extends BaseFragment implements RecipeDetailMv
     private long mRecipeId;
     private long mStepsId;
     boolean isTwoPane;
+    private boolean playWhenReady = true;
+    private int currentWindow;
+    private long playBackPosition;
 
     public static RecipeDetailFragment newInstance(long id, long stepsId) {
         RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
@@ -85,7 +84,21 @@ public class RecipeDetailFragment extends BaseFragment implements RecipeDetailMv
 
         isTwoPane = getResources().getBoolean(R.bool.two_pane_mode);
 
+        if (savedInstanceState != null) {
+            playWhenReady = savedInstanceState.getBoolean(EXTRA_PLAY_WHEN_READY);
+            currentWindow = savedInstanceState.getInt(EXTRA_CURRENT_WINDOW);
+            playBackPosition = savedInstanceState.getLong(EXTRA_PLAYBACK_POSITION);
+        }
+
         setUpPresenter();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(EXTRA_PLAY_WHEN_READY, playWhenReady);
+        outState.putInt(EXTRA_CURRENT_WINDOW, currentWindow);
+        outState.putLong(EXTRA_PLAYBACK_POSITION, playBackPosition);
     }
 
     @Override
@@ -158,7 +171,7 @@ public class RecipeDetailFragment extends BaseFragment implements RecipeDetailMv
                         MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
 
         mMediaSession.setMediaButtonReceiver(null);
-        mStateBuilder = new PlaybackStateCompat.Builder()
+        PlaybackStateCompat.Builder mStateBuilder = new PlaybackStateCompat.Builder()
                 .setActions(
                         PlaybackStateCompat.ACTION_PLAY |
                                 PlaybackStateCompat.ACTION_PAUSE |
@@ -191,18 +204,22 @@ public class RecipeDetailFragment extends BaseFragment implements RecipeDetailMv
             TrackSelector trackSelector = new DefaultTrackSelector();
             mSimpleExoPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector);
             mSimpleExoPlayerView.setPlayer(mSimpleExoPlayer);
-            mSimpleExoPlayer.addListener(this);
 
             String userAgent = Util.getUserAgent(getContext(), "StepVideo");
             MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
                     getContext(), userAgent), new DefaultExtractorsFactory(), null, null);
             mSimpleExoPlayer.prepare(mediaSource);
             mSimpleExoPlayer.setPlayWhenReady(true);
+
+            mSimpleExoPlayer.seekTo(currentWindow, playBackPosition);
         }
     }
 
     private void releasePlayer() {
         if (mSimpleExoPlayer != null) {
+            playWhenReady = mSimpleExoPlayer.getPlayWhenReady();
+            currentWindow = mSimpleExoPlayer.getCurrentWindowIndex();
+            playBackPosition = mSimpleExoPlayer.getCurrentPosition();
             mSimpleExoPlayer.stop();
             mSimpleExoPlayer.release();
             mSimpleExoPlayer = null;
@@ -216,46 +233,6 @@ public class RecipeDetailFragment extends BaseFragment implements RecipeDetailMv
     private void expandVideoView(SimpleExoPlayerView exoPlayer) {
         exoPlayer.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
         exoPlayer.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-    }
-
-    @Override
-    public void onTimelineChanged(Timeline timeline, Object manifest) {
-
-    }
-
-    @Override
-    public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
-
-    }
-
-    @Override
-    public void onLoadingChanged(boolean isLoading) {
-
-    }
-
-    @Override
-    public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-        if ((playbackState == ExoPlayer.STATE_READY) && playWhenReady) {
-            mStateBuilder.setState(PlaybackStateCompat.STATE_PLAYING, mSimpleExoPlayer.getCurrentPosition(), 1f);
-        } else if ((playbackState == ExoPlayer.STATE_READY)) {
-            mStateBuilder.setState(PlaybackStateCompat.STATE_PAUSED, mSimpleExoPlayer.getCurrentPosition(), 1f);
-        }
-        mMediaSession.setPlaybackState(mStateBuilder.build());
-    }
-
-    @Override
-    public void onPlayerError(ExoPlaybackException error) {
-
-    }
-
-    @Override
-    public void onPositionDiscontinuity() {
-
-    }
-
-    @Override
-    public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
-
     }
 
     private void hideSystemUI() {
