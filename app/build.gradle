@@ -28,6 +28,7 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "0.1"
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
 
     buildTypes {
@@ -100,4 +101,7 @@ dependencies {
 
     //----- Exo Player
     compile 'com.google.android.exoplayer:exoplayer:r2.4.3'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
 }
