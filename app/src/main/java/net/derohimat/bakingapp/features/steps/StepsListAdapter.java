@@ -1,4 +1,4 @@
-package net.derohimat.bakingapp.features.recipedetail;
+package net.derohimat.bakingapp.features.steps;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;

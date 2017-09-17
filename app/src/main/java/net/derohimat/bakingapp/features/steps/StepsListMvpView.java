@@ -1,4 +1,4 @@
-package net.derohimat.bakingapp.features.recipedetail;
+package net.derohimat.bakingapp.features.steps;
 
 import net.derohimat.bakingapp.data.models.RecipeDao;
 import net.derohimat.bakingapp.features.MvpView;

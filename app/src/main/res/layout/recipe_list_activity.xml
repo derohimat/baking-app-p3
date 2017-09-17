@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <net.derohimat.baseapp.ui.view.BaseRecyclerView
-        android:id="@+id/recyclerview"
+        android:id="@+id/recipe_list_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/spacing_half"/>
