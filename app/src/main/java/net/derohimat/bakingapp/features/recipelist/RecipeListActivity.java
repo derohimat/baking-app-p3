@@ -10,7 +10,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import net.derohimat.bakingapp.R;
 import net.derohimat.bakingapp.data.models.RecipeDao;
 import net.derohimat.bakingapp.features.AppBaseActivity;
-import net.derohimat.bakingapp.features.recipedetail.StepsDetailActivity;
+import net.derohimat.bakingapp.features.steps.StepsDetailActivity;
 import net.derohimat.bakingapp.util.DialogFactory;
 import net.derohimat.baseapp.ui.view.BaseRecyclerView;
 

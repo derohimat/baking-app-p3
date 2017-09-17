@@ -20,7 +20,7 @@
         </activity>
 
         <activity
-            android:name=".features.recipedetail.StepsDetailActivity"
+            android:name=".features.steps.StepsDetailActivity"
             android:theme="@style/AppTheme"/>
 
         <receiver android:name=".features.widgets.WidgetProvider">

@@ -1,4 +1,4 @@
-package net.derohimat.bakingapp.features.recipedetail;
+package net.derohimat.bakingapp.features.steps;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import net.derohimat.bakingapp.data.models.IngredientsDao;
 import net.derohimat.bakingapp.data.models.RecipeDao;
 import net.derohimat.bakingapp.data.models.StepsDao;
 import net.derohimat.bakingapp.features.AppBaseActivity;
+import net.derohimat.bakingapp.features.recipedetail.RecipeDetailFragment;
 import net.derohimat.bakingapp.util.DialogFactory;
 import net.derohimat.baseapp.ui.view.BaseRecyclerView;
 
