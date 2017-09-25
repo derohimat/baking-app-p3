@@ -3,10 +3,10 @@ package net.derohimat.bakingapp.features;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 
-import net.derohimat.baseapp.ui.BaseActivity;
 import net.derohimat.bakingapp.BaseApplication;
 import net.derohimat.bakingapp.di.component.ActivityComponent;
 import net.derohimat.bakingapp.di.component.DaggerActivityComponent;
+import net.derohimat.baseapp.ui.BaseActivity;
 
 import butterknife.ButterKnife;
 import timber.log.Timber;

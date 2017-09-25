@@ -16,8 +16,6 @@
     <dimen name="widget_default_width">250dp</dimen>
     <dimen name="widget_default_resize_width">180dp</dimen>
     <dimen name="widget_default_resize_height">110dp</dimen>
-    <dimen name="widget_padding">4dp</dimen>
 
     <dimen name="text_widget_title">16sp</dimen>
-    <dimen name="text_widget_item">12sp</dimen>
 </resources>
